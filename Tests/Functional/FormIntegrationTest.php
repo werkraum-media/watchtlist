@@ -28,24 +28,23 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class FormIntegrationTest extends FunctionalTestCase
 {
-    protected $coreExtensionsToLoad = [
-        'fluid_styled_content',
-        'form',
-        'tstemplate',
-    ];
-
-    protected $testExtensionsToLoad = [
-        'typo3conf/ext/watchlist',
-        'typo3conf/ext/watchlist/Tests/Fixtures/watchlist_example',
-    ];
-
-    protected $pathsToLinkInTestInstance = [
-        'typo3conf/ext/watchlist/Tests/Fixtures/Sites' => 'typo3conf/sites',
-        'typo3conf/ext/watchlist/Tests/Fixtures/Fileadmin/Files' => 'fileadmin/Files',
-    ];
-
     protected function setUp(): void
     {
+        $this->coreExtensionsToLoad = [
+            'typo3/cms-fluid-styled-content',
+            'typo3/cms-form',
+        ];
+
+        $this->testExtensionsToLoad = [
+            'werkraummedia/watchlist',
+            'typo3conf/ext/watchlist/Tests/Fixtures/watchlist_example',
+        ];
+
+        $this->pathsToLinkInTestInstance = [
+            'typo3conf/ext/watchlist/Tests/Fixtures/Sites' => 'typo3conf/sites',
+            'typo3conf/ext/watchlist/Tests/Fixtures/Fileadmin/Files' => 'fileadmin/Files',
+        ];
+
         parent::setUp();
 
         $this->importCSVDataSet(__DIR__ . '/../Fixtures/BasicDatabase.csv');
