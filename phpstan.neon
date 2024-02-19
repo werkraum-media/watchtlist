@@ -9,6 +9,3 @@ parameters:
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: true
     checkGenericClassInNonGenericObjectType: false
-    ignoreErrors:
-      - "#^Cannot call method fetchAssociative\\(\\) on Doctrine\\\\DBAL\\\\Result\\|int\\.$#"
-      - "#^Right side of \\|\\| is always false\\.$#"

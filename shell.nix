@@ -1,8 +1,21 @@
-{ pkgs ? import <nixpkgs> { } }:
+{
+    pkgs ? import <nixpkgs> { }
+    ,phps ? import <phps>
+}:
 
 let
-  php = pkgs.php81;
-  composer = pkgs.php81Packages.composer;
+  php = phps.packages.x86_64-linux.php83.buildEnv {
+    extensions = { enabled, all }: enabled ++ (with all; [
+      xdebug
+    ]);
+
+    extraConfig = ''
+      xdebug.mode = debug
+      memory_limit = 4G
+    '';
+  };
+  inherit(php.packages) composer;
+
 
   projectInstall = pkgs.writeShellApplication {
     name = "project-install";
@@ -10,7 +23,8 @@ let
       composer
     ];
     text = ''
-      composer install --prefer-dist --no-progress --working-dir="$PROJECT_ROOT"
+      rm -rf .Build/ vendor/
+      composer update --prefer-dist --no-progress --working-dir="$PROJECT_ROOT"
     '';
   };
   projectValidateComposer = pkgs.writeShellApplication {
@@ -60,7 +74,7 @@ let
     text = ''
       project-install
 
-      export INSTANCE_PATH="$PROJECT_ROOT/.Build/web/typo3temp/var/tests/acceptance/"
+      export INSTANCE_PATH="$PROJECT_ROOT/.Build/web/typo3temp/var/tests/acceptance"
 
       mkdir -p "$INSTANCE_PATH"
       ./vendor/bin/codecept run
@@ -77,6 +91,8 @@ in pkgs.mkShell {
     projectValidateXml
     projectCodingGuideline
     projectTestAcceptance
+    php
+    composer
   ];
 
   shellHook = ''

@@ -151,3 +151,11 @@ Example
 A concrete example can be found within ``Tests/Fixtures/FrontendRendering.typoscript``.
 This example includes the provided JavaScript file as well as some custom CSS and Markup.
 The content element is not necessary.
+
+Changelog
+=========
+
+v1.1.0
+------
+
+* Add Support for TYPO3 v12 and newer PHP versions.

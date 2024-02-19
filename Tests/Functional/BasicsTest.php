@@ -30,32 +30,33 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class BasicsTest extends FunctionalTestCase
 {
-    protected $coreExtensionsToLoad = [
-        'fluid_styled_content',
-    ];
-
-    protected $testExtensionsToLoad = [
-        'typo3conf/ext/watchlist',
-        'typo3conf/ext/watchlist/Tests/Fixtures/watchlist_example',
-    ];
-
-    protected $pathsToLinkInTestInstance = [
-        'typo3conf/ext/watchlist/Tests/Fixtures/Sites' => 'typo3conf/sites',
-        'typo3conf/ext/watchlist/Tests/Fixtures/Fileadmin/Files' => 'fileadmin/Files',
-    ];
-
-    protected $configurationToUseInTestInstance = [
-        'FE' => [
-            'cacheHash' => [
-                'excludedParameters' => [
-                    '^tx_watchlist_watchlist[',
-                ],
-            ],
-        ],
-    ];
-
     protected function setUp(): void
     {
+        $this->coreExtensionsToLoad = [
+            'typo3/cms-fluid-styled-content',
+            'typo3/cms-form',
+        ];
+
+        $this->testExtensionsToLoad = [
+            'werkraummedia/watchlist',
+            'typo3conf/ext/watchlist/Tests/Fixtures/watchlist_example',
+        ];
+
+        $this->pathsToLinkInTestInstance = [
+            'typo3conf/ext/watchlist/Tests/Fixtures/Sites' => 'typo3conf/sites',
+            'typo3conf/ext/watchlist/Tests/Fixtures/Fileadmin/Files' => 'fileadmin/Files',
+        ];
+
+        $this->configurationToUseInTestInstance = [
+            'FE' => [
+                'cacheHash' => [
+                    'excludedParameters' => [
+                        '^tx_watchlist_watchlist[',
+                    ],
+                ],
+            ],
+        ];
+
         parent::setUp();
 
         $this->importCSVDataSet(__DIR__ . '/../Fixtures/BasicDatabase.csv');
